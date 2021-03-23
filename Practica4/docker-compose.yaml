@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+    frontend:
+        build: frontend/.
+        container_name: frontend
+        ports: 
+            - '80:80'
+        volumes:
+            - '.:/frontend/app'
+        networks: 
+            app-net:
+                ipv4_address: 172.19.0.2
+    
+    backend:
+        build: backend/.
+        container_name: backend
+        ports: 
+            - '5000:5000'
+        volumes:
+            - '.:/backend/code'
+        networks: 
+            app-net:
+                ipv4_address: 172.19.0.3
+    
+    database:
+        image: mysql:latest
+        
+        container_name: bases-db
+        ports: 
+            - '3306:3306'
+        environment: 
+            MYSQL_ROOT_PASSWORD: 12345678
+            MYSQL_DATABASE: P2Bases
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+        volumes:
+            - database:/var/lib/mysql
+        networks: 
+            app-net:
+                ipv4_address: 172.19.0.4
+
+networks:
+    app-net:
+        ipam:
+            driver: default
+            config:
+            - subnet: "172.19.0.0/24"
+
+volumes:
+    database:
