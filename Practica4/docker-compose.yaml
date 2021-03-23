@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-    frontend:
-        build: frontend/.
-        container_name: frontend
-        ports: 
-            - '80:80'
-        volumes:
-            - '.:/frontend/app'
-        networks: 
-            app-net:
-                ipv4_address: 172.19.0.2
+    # frontend:
+    #     build: frontend/.
+    #     container_name: frontend
+    #     ports: 
+    #         - '80:80'
+    #     volumes:
+    #         - '.:/frontend/app'
+    #     networks: 
+    #         app-net:
+    #             ipv4_address: 172.19.0.2
     
     backend:
         build: backend/.
@@ -19,9 +19,11 @@ services:
             - '5000:5000'
         volumes:
             - '.:/backend/code'
+        environment: 
+            - SERVNAME=201612272
         networks: 
-            app-net:
-                ipv4_address: 172.19.0.3
+            service_network:
+                ipv4_address: 172.35.71.2
     
     database:
         image: mysql:latest
@@ -31,21 +33,36 @@ services:
             - '3306:3306'
         environment: 
             MYSQL_ROOT_PASSWORD: 12345678
-            MYSQL_DATABASE: P2Bases
+            MYSQL_DATABASE: P4Redes
             MYSQL_USER: admin
             MYSQL_PASSWORD: admin
         volumes:
             - database:/var/lib/mysql
         networks: 
-            app-net:
-                ipv4_address: 172.19.0.4
+            db_network:
+                ipv4_address: 10.10.11.2
 
 networks:
-    app-net:
+    # frontend_network:
+    #     driver: bridge
+    #     ipam:
+    #         driver: default
+    #         config:
+    #         - subnet: "192.168.51.0/24"
+
+    service_network:
+        driver: bridge
         ipam:
             driver: default
             config:
-            - subnet: "172.19.0.0/24"
+            - subnet: "172.35.71.0/24"
+
+    db_network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+            - subnet: "10.10.11.0/24"
 
 volumes:
     database:
