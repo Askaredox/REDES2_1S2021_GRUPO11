@@ -31,7 +31,7 @@ def get_reporte():
     res['atendido'] = str(os.getenv('SERVNAME'))
     db = Database()
     res['data'] = db.get_reporte(reporte)
-    return json.dumps(res)
+    return json.dumps(res, default=str)
 
 
 @app.route('/get_lista_reporte', methods=['GET'])
