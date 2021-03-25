@@ -23,13 +23,10 @@ class usuario extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      usuario: {},
-      nUsuario: '',
+      carnet: -1,
       nombre: '',
-      apellido: '',
-      direccion: '',
-      telefono: '',
-      contrasena: '',
+      curso: '',
+      detalle: '',
     };
     // this.guardar = this.guardar.bind(this);
     this.eliminar = this.eliminar.bind(this);
@@ -45,7 +42,7 @@ class usuario extends React.Component {
   }
 
   async handleChangeCarnet(event) {
-    this.setState({ nUsuario: event.target.value });
+    this.setState({ carnet: event.target.value });
   }
 
   async handleChangeNombre(event) {
@@ -53,11 +50,11 @@ class usuario extends React.Component {
   }
 
   async handleChangeCursoPoryecto(event) {
-    this.setState({ apellido: event.target.value });
+    this.setState({ curso: event.target.value });
   }
 
   async handleChangeDetalle(event) {
-    this.setState({ direccion: event.target.value });
+    this.setState({ detalle: event.target.value });
   }
 
   async handleSubmit() {
@@ -66,76 +63,39 @@ class usuario extends React.Component {
     // event.preventDefault();
 
     let obj = JSON.stringify({
-      id: this.state.usuario.id + "",
-      estado: this.state.usuario.estado === 1,
-      id_tipo_usuario: this.state.usuario.tipo_usuario + "",
-      usuario: this.state.nUsuario != '' ? this.state.nUsuario : this.state.usuario.usuario,
-      nombre: this.state.nombre != '' ? this.state.nombre : this.state.usuario.nombre,
-      apellido: this.state.apellido != '' ? this.state.apellido : this.state.usuario.apellido,
-      direccion: this.state.direccion != '' ? this.state.direccion : this.state.usuario.direccion,
-      telefono: this.state.telefono != '' ? this.state.telefono : this.state.usuario.telefono,
-      password: this.state.contrasena != '' ? this.state.contrasena : this.state.usuario.contrasenia,
-    })
+          carnet:  parseInt(this.state.carnet, 10),
+          nombre: this.state.nombre + "",
+          curso: this.state.curso + "",
+          mensaje: this.state.detalle + ""
+        })
 
-    let newUser = this.state.nUsuario != '' ? this.state.nUsuario : this.state.usuario.usuario
-    let newPass = this.state.contrasena != '' ? this.state.contrasena : this.state.usuario.contrasenia
-    console.log(obj)
-
-    fetch(`http://35.226.179.134:9006/usuarios/modificar_usuario`, {
+        console.log(obj)
+    fetch(`http://172.35.71.2:80/add_reporte`, {
       method: 'POST',
       body: obj,
       headers: {
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
       }
     }).then(async function (response) {
-      let respuesta = await response.json();
+      console.log(response)
 
-      console.log(respuesta)
-      if (respuesta.estado === 200) {
+      // let respuesta = await response.json();
 
-
-        alert("Modificado Correctamente");
-        // console.log(this.state.usuario)
-        let aJsonObj = JSON.stringify({
-          usuario: newUser,
-          password: newPass
-        })
-        fetch(`http://35.226.179.134:9007/usuarios/login`, {
-          method: 'POST',
-          body: aJsonObj,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(async function (response) {
-            let respuesta = await response.json();
-
-            if (respuesta.estado === 200) {
-              let val = respuesta.data;
-              console.log(val[0]);
-              localStorage.setItem('current', JSON.stringify(val[0]));
-
-            } else {
-              console.log(respuesta)
-              alert("Error, credenciales invalidas");
-            }
-
-          });
-
-      } else {
-        console.log(respuesta)
-        alert("Error, credenciales invalidas");
-      }
+      // console.log(respuesta)
+      
+      if(response.ok) return alert('Dato ingresado')
+      alert('error')
 
     });
 
 
   }
 
+
   async fetchData() {
-    let dataUsuario = JSON.parse(localStorage.getItem('current'))
+    // let dataUsuario = JSON.parse(localStorage.getItem('current'))
  
-    this.setState({ usuario: dataUsuario });
+    // this.setState({ usuario: dataUsuario });
   }
 
   componentWillMount() {
@@ -163,7 +123,7 @@ class usuario extends React.Component {
                           // autoFocus
                           type="text"
                           // alue={this.state.usuario['usuario']}
-                          Change={this.handleChangeCarnet}
+                          onChange={this.handleChangeCarnet}
                         />
                       </FormGroup>
                     </Col>
@@ -208,13 +168,17 @@ class usuario extends React.Component {
                           // autoFocus
                           type="textarea"
                           // defaultValue={this.state.usuario['direccion']}
-                          onChange={this.handleChangeDetalle}
+                          
                         />
                       </FormGroup > */}
 
                         <FormGroup>
                           {/* <Label for="exampleText">Text Area</Label> */}
-                          <Input type="textarea" name="text" id="exampleText" />
+                          <Input 
+                            type="textarea" 
+                            name="text" 
+                            onChange={this.handleChangeDetalle}
+                          />
                         </FormGroup>
       
                     </Col>
