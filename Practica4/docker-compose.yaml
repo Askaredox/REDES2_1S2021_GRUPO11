@@ -1,17 +1,18 @@
 version: '3'
 
 services:
-    # frontend:
-    #     build: frontend/.
-    #     container_name: frontend
-    #     ports: 
-    #         - '80:80'
-    #     volumes:
-    #         - '.:/frontend/app'
-    #     networks: 
-    #         app-net:
-    #             ipv4_address: 172.19.0.2
-    
+
+    frontend:
+        build: frontend/.
+        container_name: frontend
+        ports: 
+            - '3000:3000'
+        volumes:
+            - '.:/frontend/app'
+        networks: 
+            frontend_network:
+                ipv4_address: 192.168.51.2
+
     nginx:
         image: nginx:1.15
         container_name: nginx
@@ -48,7 +49,7 @@ services:
         volumes:
             - '.:/backend/code'
         environment: 
-            - SERVNAME=201612345
+            - SERVNAME=201403904
         networks: 
             service_network:
                 ipv4_address: 172.35.71.4
@@ -61,7 +62,7 @@ services:
         volumes:
             - '.:/backend/code'
         environment: 
-            - SERVNAME=201654321
+            - SERVNAME=201404104
         networks: 
             service_network:
                 ipv4_address: 172.35.71.5
@@ -83,12 +84,12 @@ services:
                 ipv4_address: 10.10.11.2
 
 networks:
-    # frontend_network:
-    #     driver: bridge
-    #     ipam:
-    #         driver: default
-    #         config:
-    #         - subnet: "192.168.51.0/24"
+    frontend_network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+            - subnet: "192.168.51.0/24"
 
     service_network:
         driver: bridge
@@ -103,6 +104,8 @@ networks:
             driver: default
             config:
                 - subnet: "10.10.11.0/24"
+    
+        external: false
 
 volumes:
     database:

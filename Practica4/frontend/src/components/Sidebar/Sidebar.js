@@ -106,48 +106,8 @@ class Sidebar extends React.Component {
       }
     }
     return (
-      <div className="sidebar" data={bgColor}>
-        <div className="sidebar-wrapper" ref="sidebar">
-          {logoImg !== null || logoText !== null ? (
-            <div className="logo">
-              {logoImg}
-              {logoText}
-            </div>
-          ) : null}
-          <Nav>
-            {routes.map((prop, key) => {
-              if (prop.redirect) return null;
-              if (JSON.parse(localStorage.getItem('current')).id_tipo_usuario == 2 && prop.access === 'admin' ){
-                // alert('Regresa supuestamente')
-                return null;
-              } 
-              return (
-                <li
-                  className={
-                    this.activeRoute(prop.path) +
-                    (prop.pro ? " active-pro" : "")
-                  }
-                  key={key}
-                >
-                  <NavLink
-                    to={prop.layout + prop.path}
-                    className="nav-link"
-                    activeClassName="active"
-                    onClick={this.props.toggleSidebar}
-                  >
-                    <i className={prop.icon} />
-                    <p>{rtlActive ? prop.rtlName : prop.name}</p>
-                  </NavLink>
-                </li>
-              );
-            })}
-            <li
-              className="active-pro"
-            >
-              
-            </li>
-          </Nav>
-        </div>
+      <div>
+        
       </div>
     );
   }
