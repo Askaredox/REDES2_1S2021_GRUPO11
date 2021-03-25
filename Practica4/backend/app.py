@@ -20,6 +20,7 @@ def add_reporte():
     content['procesado'] = str(os.getenv('SERVNAME'))
     db = Database()
     res = db.add_reporte(content)
+    res['atendido'] = str(os.getenv('SERVNAME'))
     return json.dumps(res)
 
 

@@ -61,10 +61,10 @@ class Database:
             with self.connection.cursor() as cursor:
                 sql = ''
                 if carnet is None:
-                    sql = 'SELECT r.ID_reporte, e.carnet, e.nombre, e.curso, r.fecha, r.mensaje FROM Estudiante e INNER JOIN Reporte r ON r.estudiante = e.ID_estudiante'
+                    sql = 'SELECT r.ID_reporte, e.carnet, e.nombre, e.curso, r.procesado, r.fecha, r.mensaje FROM Estudiante e INNER JOIN Reporte r ON r.estudiante = e.ID_estudiante'
                     cursor.execute(sql)
                 else:
-                    sql = 'SELECT r.ID_reporte, e.carnet, e.nombre, e.curso, r.fecha, r.mensaje FROM Estudiante e INNER JOIN Reporte r ON r.estudiante = e.ID_estudiante WHERE e.carnet = %s'
+                    sql = 'SELECT r.ID_reporte, e.carnet, e.nombre, e.curso, r.procesado, r.fecha, r.mensaje FROM Estudiante e INNER JOIN Reporte r ON r.estudiante = e.ID_estudiante WHERE e.carnet = %s'
                     cursor.execute(sql, (carnet,))
 
                 ret = cursor.fetchall()
