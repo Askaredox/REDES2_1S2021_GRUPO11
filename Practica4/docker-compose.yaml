@@ -11,7 +11,6 @@ services:
         networks: 
             frontend_network:
                 ipv4_address: 192.168.51.2
-    
     nginx:
         image: nginx:1.15
         container_name: nginx
@@ -61,7 +60,7 @@ services:
         volumes:
             - '.:/backend/code'
         environment: 
-            - SERVNAME=201604104
+            - SERVNAME=201404104
         networks: 
             service_network:
                 ipv4_address: 172.35.71.5
@@ -88,7 +87,7 @@ networks:
         ipam:
             driver: default
             config:
-            - subnet: "192.168.51.0/24"
+                - subnet: "192.168.51.0/24"
 
     service_network:
         driver: bridge
@@ -103,6 +102,7 @@ networks:
             driver: default
             config:
                 - subnet: "10.10.11.0/24"
+    
         external: false
 
 volumes:

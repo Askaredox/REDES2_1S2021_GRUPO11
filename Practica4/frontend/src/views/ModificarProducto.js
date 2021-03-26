@@ -125,40 +125,15 @@ class ModificarProducto extends React.Component {
     let response = await fetch(`http://172.35.71.2:80/get_reporte?reporte=${id}`);
     let dataReportes = await response.json();
  
+    console.log(response)
+    console.log(dataReportes)
+    console.log(id)
     this.state.index = id
 
 
     this.setState({reporte: dataReportes.data, atendido: dataReportes.atendido});
 
     this.forceUpdate();
-    // console.log(event)
-    // event.preventDefault();
-
-    // let obj = JSON.stringify({
-    //       carnet:  parseInt(this.state.carnet, 10),
-    //       nombre: this.state.nombre + "",
-    //       curso: this.state.curso + "",
-    //       mensaje: this.state.detalle + ""
-    //     })
-
-    //     console.log(obj)
-    // fetch(`http://172.35.71.2:80/add_reporte`, {
-    //   method: 'POST',
-    //   body: obj,
-    //   headers: {
-    //       'Content-Type': 'application/json'
-    //   }
-    // }).then(async function (response) {
-    //   console.log(response)
-
-    //   // let respuesta = await response.json();
-
-    //   // console.log(respuesta)
-      
-    //   if(response.ok) return alert('Dato ingresado')
-    //   alert('error')
-
-    // });
 
     
 
@@ -274,7 +249,7 @@ async requestSearch (searchedVal) {
                     <TableCell>{data.fecha}</TableCell>
                     <TableCell>{data.procesado}</TableCell>
                     <TableCell>
-                      <Button className="btn-fill" value={data.id} color="primary" type="submit" onClick={(ev) => { ev.preventDefault(); this.handleReporte(data.id)}}>
+                      <Button className="btn-fill" value={data.ID_reporte} color="primary" type="submit" onClick={(ev) => { ev.preventDefault(); this.handleReporte(ev.target.value)}}>
                         Mostrar
                       </Button></TableCell>
                       
