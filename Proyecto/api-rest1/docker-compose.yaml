@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  service1:
+    build: .
+    container_name: service1
+    volumes:
+      - '.:/backend/code'
+    environment:
+      - SERVNAME=0
+    ports:
+      - 443:443
+    networks:
+      service_network:
+
+networks:
+    service_network:
+        driver: bridge
