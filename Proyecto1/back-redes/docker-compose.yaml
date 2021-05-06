@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  service1:
+    build: back/.
+    container_name: service1
+    volumes:
+      - '.:/backend/code'
+    environment:
+      - SERVNAME=20140410
+    ports:
+    - 5000:5000
+    networks:
+      service_network:
+
+  service2:
+    build: back/.
+    container_name: service2
+    volumes:
+      - '.:/backend/code'
+    environment:
+      - SERVNAME=20140410
+    ports:
+    - 5001:5000
+    networks:
+      service_network:
+
+  database:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: bases-db
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 201404104
+      MYSQL_DATABASE: nicte
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      service_network:
+
+networks:
+    service_network:
+        driver: bridge
+
+volumes:
+    database:
