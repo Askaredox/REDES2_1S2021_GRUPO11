@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve api-rest2
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/api-rest2
+Environment="PATH=/home/ubuntu/api-rest2/venv/bin"
+ExecStart=/home/ubuntu/api-rest2/venv/bin/gunicorn --workers 3 --bind unix:api-rest2.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

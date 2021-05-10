@@ -3,3 +3,4 @@ Flask-Cors==3.0.10
 requests
 simplejson==3.17.2
 pyopenssl
+gunicorn

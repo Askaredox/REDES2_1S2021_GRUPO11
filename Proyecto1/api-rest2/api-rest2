@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name grupo11-api.tk www.grupo11-api.tk;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/api-rest2/api-rest2.sock;
+    }
+}

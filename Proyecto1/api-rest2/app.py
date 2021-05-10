@@ -14,7 +14,7 @@ def check():
     r = requests.get(URL+'/',)
     return json.dumps(r.content), r.status_code
 
-@app.route('/ListarIdEvento', methods=['GET'])
+@app.route('/ListarIdEvento', methods=['POST'])
 def ListarIdEvento():
     content = request.get_json()
     r = requests.get(URL+'/ListarIdEvento',json=content)
@@ -28,7 +28,7 @@ def AgregarUsuario():
     return json.dumps(r.content), r.status_code
 
 
-@app.route('/ListarPorCarnet', methods=['GET'])
+@app.route('/ListarPorCarnet', methods=['POST'])
 def ListarPorCarnet():
     content = request.get_json()
     r = requests.get(URL+'/ListarPorCarnet',json=content)
@@ -37,5 +37,5 @@ def ListarPorCarnet():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=443, threaded=True, use_reloader=True, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host='0.0.0.0')
 
